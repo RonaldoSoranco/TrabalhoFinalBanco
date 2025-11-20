@@ -1,4 +1,4 @@
-package br.com.cesurgmarau.exception;
+package br.com.cesurgmarau.bancos.exception;
 
 public class UsuarioNotFoundException extends Exception{
     public UsuarioNotFoundException (String mensagem){

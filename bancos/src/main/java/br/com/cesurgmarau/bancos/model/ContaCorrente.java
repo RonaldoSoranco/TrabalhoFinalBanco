@@ -1,6 +1,6 @@
-package br.com.cesurgmarau.model;
+package br.com.cesurgmarau.bancos.model;
 
-import br.com.cesurgmarau.exception.SaldoInsuficienteException;
+import br.com.cesurgmarau.bancos.exception.SaldoInsuficienteException;
 
 public class ContaCorrente extends Conta{
     private double limite;

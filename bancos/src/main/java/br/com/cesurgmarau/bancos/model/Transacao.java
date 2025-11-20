@@ -1,4 +1,4 @@
-package br.com.cesurgmarau.model;
+package br.com.cesurgmarau.bancos.model;
 
 import java.time.LocalDateTime;
 

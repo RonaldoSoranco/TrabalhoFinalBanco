@@ -1,4 +1,4 @@
-package br.com.cesurgmarau.model;
+package br.com.cesurgmarau.bancos.model;
 
 public class Usuario {
 
