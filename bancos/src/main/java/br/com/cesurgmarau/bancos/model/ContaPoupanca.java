@@ -1,27 +1,28 @@
 package br.com.cesurgmarau.bancos.model;
 
-import br.com.cesurgmarau.bancos.exception.SaldoInsuficienteException;
+import java.math.BigDecimal;
 
 public class ContaPoupanca extends Conta {
-    private double taxadeJuros;
 
-    public ContaPoupanca (Long id, String agencia, String numero,Long usuarioId, double saldoInicial, double taxadeJuros){
-        super(id,agencia,numero,usuarioId,saldoInicial);
-        this.taxadeJuros = taxadeJuros;
+    private BigDecimal taxaRendimento;
+
+    // Construtor Vazio
+    public ContaPoupanca() {
+        super();
     }
 
-    public double getTaxadeJuros(){
-        return taxadeJuros;
+    // Construtor Completo
+    public ContaPoupanca(Long id, String numero, BigDecimal saldo, Usuario usuario, BigDecimal taxaRendimento) {
+        super(id, numero, saldo, usuario);
+        this.taxaRendimento = taxaRendimento;
     }
 
-    @Override
-    public void debitar (double valor)throws SaldoInsuficienteException {
-        if (valor <= 0) throw new IllegalArgumentException("Valor deve ser positivo");
-        if (saldo < valor) {
-            throw new SaldoInsuficienteException("Saldo insuficiente na poupanca.");
-        }
+    // Getters e Setters
+    public BigDecimal getTaxaRendimento() {
+        return taxaRendimento;
+    }
 
-        saldo -=valor;
-        }
-
+    public void setTaxaRendimento(BigDecimal taxaRendimento) {
+        this.taxaRendimento = taxaRendimento;
+    }
 }

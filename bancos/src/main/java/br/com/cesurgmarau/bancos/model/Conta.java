@@ -1,67 +1,49 @@
 package br.com.cesurgmarau.bancos.model;
 
-import br.com.cesurgmarau.bancos.exception.SaldoInsuficienteException;
+import java.math.BigDecimal;
 
-public abstract class Conta {
+public class Conta {
+
     private Long id;
-    private String agencia;
     private String numero;
-    private Long usuarioId;
+    private BigDecimal saldo;
+    private Usuario usuario;
 
-    protected double saldo;
+    // 1. Construtor Vazio (Obrigatório)
+    public Conta() {
+    }
 
-    public Conta(Long id, String agencia, String numero, Long usuarioId, double saldo) {
+    // 2. Construtor Novo (O Jeito Certo)
+    public Conta(Long id, String numero, BigDecimal saldo, Usuario usuario) {
         this.id = id;
-        this.agencia = agencia;
         this.numero = numero;
-        this.usuarioId = usuarioId;
         this.saldo = saldo;
+        this.usuario = usuario;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    // 3. CONSTRUTOR DE COMPATIBILIDADE (CORRIGE O SEU ERRO)
+    // Este construtor aceita os 5 parâmetros antigos e converte para o novo formato
+    public Conta(Long id, String numero, String tipoIgnorado, Long idUsuario, double saldoDouble) {
         this.id = id;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
         this.numero = numero;
+        // Converte o double antigo para BigDecimal
+        this.saldo = BigDecimal.valueOf(saldoDouble);
+
+        // Cria um usuário temporário só com o ID para não dar erro
+        this.usuario = new Usuario();
+        this.usuario.setId(idUsuario);
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
+    // --- GETTERS E SETTERS ---
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
-    }
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
 
-    public double getSaldo() {
-        return saldo;
-    }
+    public BigDecimal getSaldo() { return saldo; }
+    public void setSaldo(BigDecimal saldo) { this.saldo = saldo; }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-    //Regras de negócio dentro do pilar da encapsilacao
-
-    public void creditar(double valor){
-        if(valor <=0){throw new IllegalArgumentException("Valor deve ser positivo");}
-        this.saldo +=valor;
-    }
-    public abstract void debitar(double valor)throws SaldoInsuficienteException;
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

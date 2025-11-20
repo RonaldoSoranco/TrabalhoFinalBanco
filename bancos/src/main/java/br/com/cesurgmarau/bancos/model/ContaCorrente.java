@@ -1,23 +1,36 @@
 package br.com.cesurgmarau.bancos.model;
 
-import br.com.cesurgmarau.bancos.exception.SaldoInsuficienteException;
+import java.math.BigDecimal;
 
-public class ContaCorrente extends Conta{
-    private double limite;
+public class ContaCorrente extends Conta {
 
-    public ContaCorrente(Long id,String agencia, String numero, Long usuarioId,double saldoInicial, double limite){
-        super(id,agencia,numero,usuarioId,saldoInicial);
+    private BigDecimal limite;
+
+    public ContaCorrente() {
+        super();
+    }
+
+    // Construtor atualizado para receber BigDecimal e Usuario
+    public ContaCorrente(Long id, String numero, BigDecimal saldo, Usuario usuario, BigDecimal limite) {
+        super(id, numero, saldo, usuario);
         this.limite = limite;
     }
-    public double getLimite(){
+
+    // SE VOCÊ TIVER MÉTODOS COM @OVERRIDE, ELES PRECISAM USAR BIGDECIMAL AGORA
+
+    // Exemplo: Se você sobrescrevia o setSaldo, apague ou atualize para:
+    /*
+    @Override
+    public void setSaldo(BigDecimal saldo) {
+        super.setSaldo(saldo);
+    }
+    */
+
+    public BigDecimal getLimite() {
         return limite;
     }
-    @Override
-    public void debitar(double valor)throws SaldoInsuficienteException{
-        if(valor <=0)throw new IllegalArgumentException("O valor deve ser positivo!");
-        if(saldo + limite <valor){
-            throw new SaldoInsuficienteException("Saldo + limite insuficiente!!");
-        }
-        this.saldo-=valor;
+
+    public void setLimite(BigDecimal limite) {
+        this.limite = limite;
     }
 }

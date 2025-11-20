@@ -1,26 +1,35 @@
 package br.com.cesurgmarau.bancos.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transacao {
 
     private Long id;
-    private Long contaOrigemId;
-    private Long contaDestinoId;
-    private double valor;
-    private LocalDateTime dataHora;
+    private BigDecimal valor; // Mudamos de Double para BigDecimal
+    private LocalDateTime data;
 
-    public Transacao(Long id, Long contaOrigemId, Long contaDestinoId, double valor, LocalDateTime dataHora) {
-        this.id = id;
-        this.contaOrigemId = contaOrigemId;
-        this.contaDestinoId = contaDestinoId;
-        this.valor = valor;
-        this.dataHora = dataHora;
+    // O Service precisa desses objetos inteiros, não só do ID
+    private Conta contaOrigem;
+    private Conta contaDestino;
+
+    // Construtor Vazio
+    public Transacao() {
     }
-    public Long getId(){return id;}
-    public Long getContaOrigemId(){return contaOrigemId;}
-    public Long getContaDestinoId(){return contaDestinoId;}
-    public double getValor(){return valor;}
-    public LocalDateTime getDataHora(){return dataHora;}
 
+    // Getters e Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public BigDecimal getValor() { return valor; }
+    public void setValor(BigDecimal valor) { this.valor = valor; }
+
+    public LocalDateTime getData() { return data; }
+    public void setData(LocalDateTime data) { this.data = data; }
+
+    public Conta getContaOrigem() { return contaOrigem; }
+    public void setContaOrigem(Conta contaOrigem) { this.contaOrigem = contaOrigem; }
+
+    public Conta getContaDestino() { return contaDestino; }
+    public void setContaDestino(Conta contaDestino) { this.contaDestino = contaDestino; }
 }
