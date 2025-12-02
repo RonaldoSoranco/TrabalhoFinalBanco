@@ -6,18 +6,17 @@ import java.time.LocalDateTime;
 public class Transacao {
 
     private Long id;
-    private BigDecimal valor; // Mudamos de Double para BigDecimal
+    private BigDecimal valor;
     private LocalDateTime data;
 
-    // O Service precisa desses objetos inteiros, não só do ID
     private Conta contaOrigem;
     private Conta contaDestino;
 
-    // Construtor Vazio
+
     public Transacao() {
     }
 
-    // Getters e Setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

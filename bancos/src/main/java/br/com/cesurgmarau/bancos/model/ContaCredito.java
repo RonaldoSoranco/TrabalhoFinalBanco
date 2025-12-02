@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class ContaCredito extends Conta {
 
-    private BigDecimal limiteCredito; // Mudei de 'limite' para 'limiteCredito'
+    private BigDecimal limiteCredito;
 
     public ContaCredito() {
         super();

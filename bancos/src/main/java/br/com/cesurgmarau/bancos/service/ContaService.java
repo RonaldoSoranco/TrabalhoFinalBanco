@@ -1,5 +1,6 @@
 package br.com.cesurgmarau.bancos.service;
 
+import br.com.cesurgmarau.bancos.exception.UsuarioNotFoundException;
 import br.com.cesurgmarau.bancos.model.Conta;
 import br.com.cesurgmarau.bancos.model.Usuario;
 import br.com.cesurgmarau.bancos.repository.ContaRepository;
@@ -17,26 +18,22 @@ public class ContaService {
     private ContaRepository contaRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // Precisamos disso para validar o dono
+    private UsuarioRepository usuarioRepository;
 
     public Conta criar(Conta conta) {
-        // --- VALIDAÇÃO 1: Verifica se mandaram o usuário ---
+
         if (conta.getUsuario() == null || conta.getUsuario().getId() == null) {
-            throw new IllegalArgumentException("Para criar uma conta, é obrigatório informar o ID do Usuário!");
+            throw new IllegalArgumentException("É obrigatório informar o ID do Usuário!");
         }
 
-        // --- VALIDAÇÃO 2: Verifica se o usuário existe no banco ---
         Optional<Usuario> usuarioExistente = usuarioRepository.buscarPorId(conta.getUsuario().getId());
-
         if (usuarioExistente.isEmpty()) {
-            throw new IllegalArgumentException("Usuário não encontrado! Não é possível criar conta para um ID inexistente.");
+            throw new UsuarioNotFoundException("Usuário não encontrado!");
         }
 
-        // --- REGRA DE NEGÓCIO: Atualiza com os dados reais do usuário ---
-        // Isso garante que a conta fique vinculada ao objeto certo na memória
+
         conta.setUsuario(usuarioExistente.get());
 
-        // Salva a conta
         return contaRepository.salvar(conta);
     }
 
@@ -44,8 +41,11 @@ public class ContaService {
         return contaRepository.listarTodas();
     }
 
-    // Se precisar buscar conta por ID
     public Optional<Conta> buscarPorId(Long id) {
         return contaRepository.buscarPorId(id);
+    }
+
+    public void deletar(Long id) {
+        contaRepository.deletar(id);
     }
 }

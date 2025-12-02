@@ -15,18 +15,11 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     public Usuario criar(Usuario usuario) {
+        if (usuario.getCpf() == null) throw new IllegalArgumentException("CPF obrigatório");
 
-        if (usuario.getCpf() == null || usuario.getCpf().isEmpty()) {
-            throw new IllegalArgumentException("O CPF é obrigatório!");
-        }
-        if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-            throw new IllegalArgumentException("O Nome é obrigatório!");
-        }
-
-        Optional<Usuario> usuarioExistente = repository.buscarPorCpf(usuario.getCpf());
-
-        if (usuarioExistente.isPresent()) {
-            throw new IllegalArgumentException("já existe um usuario cadastrado com esse CPF");
+        if (usuario.getId() == null) {
+            Optional<Usuario> existe = repository.buscarPorCpf(usuario.getCpf());
+            if (existe.isPresent()) throw new IllegalArgumentException("CPF já existe");
         }
 
         return repository.salvar(usuario);
@@ -34,5 +27,15 @@ public class UsuarioService {
 
     public List<Usuario> listar() {
         return repository.listarTodos();
+    }
+
+
+    public Usuario atualizar(Long id, Usuario usuario) {
+        usuario.setId(id);
+        return repository.salvar(usuario);
+    }
+
+    public void deletar(Long id) {
+        repository.deletar(id);
     }
 }

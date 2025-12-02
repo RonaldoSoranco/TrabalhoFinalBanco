@@ -14,7 +14,7 @@ public class TransacaoRepository {
     private final AtomicLong idCounter = new AtomicLong(0);
 
     public Transacao salvar(Transacao transacao) {
-        // Gera um ID novo para a transação
+
         transacao.setId(idCounter.incrementAndGet());
         transacoes.add(transacao);
         return transacao;

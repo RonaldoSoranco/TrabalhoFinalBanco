@@ -14,28 +14,28 @@ public class ContaRepository {
     private final List<Conta> contas = new ArrayList<>();
     private final AtomicLong idCounter = new AtomicLong(0);
 
-    // cria ou atualiza
     public Conta salvar(Conta conta) {
         if (conta.getId() == null || conta.getId() == 0) {
             conta.setId(idCounter.incrementAndGet());
         } else {
-            // para remover a conta antiga na atualização
+
             contas.removeIf(c -> c.getId().equals(conta.getId()));
         }
         contas.add(conta);
         return conta;
     }
 
-    // pra busca por id
     public Optional<Conta> buscarPorId(Long id) {
         return contas.stream()
                 .filter(c -> c.getId() != null && c.getId().equals(id))
                 .findFirst();
     }
 
-    // lista tudoas
     public List<Conta> listarTodas() {
         return new ArrayList<>(contas);
     }
 
+    public void deletar(Long id) {
+        contas.removeIf(c -> c.getId().equals(id));
     }
+}

@@ -6,12 +6,12 @@ public class ContaPoupanca extends Conta {
 
     private BigDecimal taxaRendimento;
 
-    // Construtor Vazio
+
     public ContaPoupanca() {
         super();
     }
 
-    // Construtor Completo
+
     public ContaPoupanca(Long id, String numero, BigDecimal saldo, Usuario usuario, BigDecimal taxaRendimento) {
         super(id, numero, saldo, usuario);
         this.taxaRendimento = taxaRendimento;

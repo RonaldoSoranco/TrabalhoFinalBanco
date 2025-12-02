@@ -1,7 +1,7 @@
-package br.com.cesurgmarau.bancos.controller; // <--- O segredo está aqui: .bancos.controller
+package br.com.cesurgmarau.bancos.controller;
 
-import br.com.cesurgmarau.bancos.model.Usuario; // Talvez precise ajustar o import do model também
-import br.com.cesurgmarau.bancos.service.UsuarioService; // E do service
+import br.com.cesurgmarau.bancos.model.Usuario;
+import br.com.cesurgmarau.bancos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    // ... resto do código igual ...
+
     @Autowired
     private UsuarioService service;
 
@@ -22,5 +22,16 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listar() {
         return service.listar();
+    }
+
+
+    @PutMapping("/{id}") // Resolve o erro 404 no PUT
+    public Usuario atualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return service.atualizar(id, usuario);
+    }
+
+    @DeleteMapping("/{id}") // Permite deletar
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
     }
 }
