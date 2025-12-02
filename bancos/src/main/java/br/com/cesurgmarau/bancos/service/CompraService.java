@@ -1,6 +1,8 @@
 package br.com.cesurgmarau.bancos.service;
 
 import br.com.cesurgmarau.bancos.dto.CompraDTO;
+import br.com.cesurgmarau.bancos.exception.CountNotFoundException;
+import br.com.cesurgmarau.bancos.exception.SaldoInsuficienteException;
 import br.com.cesurgmarau.bancos.model.Compra;
 import br.com.cesurgmarau.bancos.model.Conta;
 import br.com.cesurgmarau.bancos.model.ContaCredito;
@@ -24,13 +26,13 @@ public class CompraService {
     public String processarCompra(CompraDTO dto) {
         Optional<Conta> contaOpt = contaRepository.buscarPorId(dto.getContaId());
         if (contaOpt.isEmpty()) {
-            throw new IllegalArgumentException("Conta não encontrada!");
+            throw new CountNotFoundException("Conta não encontrada!");
         }
         Conta conta = contaOpt.get();
 
         if ("DEBITO".equalsIgnoreCase(dto.getTipoPagamento())) {
             if (conta.getSaldo().compareTo(dto.getValor()) < 0) {
-                throw new IllegalArgumentException("Saldo insuficiente!");
+                throw new SaldoInsuficienteException("Saldo insuficiente!");
             }
             conta.setSaldo(conta.getSaldo().subtract(dto.getValor()));
             contaRepository.salvar(conta);
